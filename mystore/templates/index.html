@@ -1,14 +1,14 @@
+
 <!DOCTYPE html>
 <html>
 <body>
 
-<h1>Members</h1>
+<h1>Test</h1>
 
-<ul>
-  {% for x in brand %}
-    <li>{{ x.brand_id }}</li>
-  {% endfor %}
-</ul>
+{% for x in sp %}
+{{ x.hinhanh }}
+    <img src="{{ x.hinhanh.url }}">
+{% endfor %}
 
 </body>
 </html>
