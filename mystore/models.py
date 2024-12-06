@@ -19,20 +19,20 @@ class brands(models.Model):
     #category_title = models.CharField(max_length=100)
 
 class sp(models.Model):
-    masp = models.CharField(max_length=4, primary_key=True, auto_created=True)
+    masp = models.AutoField(primary_key=True)
     tensp = models.CharField(max_length=100)
     dvt = models.CharField(max_length=30, default=1)
-    nuocsx = models.CharField(max_length=100, default="China")
-    gia = models.IntegerField(default=0)#Chua biet co kieu money hay ko
+    nuocsx = models.CharField(max_length=70, default="China")
+    gia = models.IntegerField(default=0)#
     brand_id = models.ForeignKey(brands, on_delete=models.CASCADE)#
     #category_id = models.CharField(max_length=100)#
     hinhanh = models.ImageField()
 
 class hoadon(models.Model):
-    sohd = models.IntegerField(primary_key=True, auto_created=True)
+    sohd = models.AutoField(primary_key=True)
     nghd = models.DateTimeField(auto_now_add=True)
     user_id = models.ForeignKey(useraccount, on_delete=models.CASCADE)#
-    trigia = models.IntegerField()#Chua biet co kieu money hay ko
+    trigia = models.IntegerField()#
 
 class cthd(models.Model):
     sohd = models.ForeignKey(hoadon, on_delete=models.CASCADE)#
