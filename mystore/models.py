@@ -7,6 +7,7 @@ class useraccount(models.Model):
     user_password = models.CharField(max_length=40)
     ho_ten = models.CharField(max_length=40, default="Nguyen Van A")
     so_dt = models.CharField(max_length=10, default=None)
+    allow_edit = models.BooleanField(default=False)
 
 class brands(models.Model):
     brand_id = models.CharField(max_length=100, primary_key=True)
