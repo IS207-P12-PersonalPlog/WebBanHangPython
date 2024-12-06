@@ -1,9 +1,10 @@
 from django.db import models
+import uuid
 
 # Create your models here.
 #Chua biet dat the ngoai
 class useraccount(models.Model):
-    user_id = models.CharField(auto_created=True, max_length=4, primary_key=True)
+    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_password = models.CharField(max_length=40)
     ho_ten = models.CharField(max_length=40, default="Nguyen Van A")
     so_dt = models.CharField(max_length=10, default=None, blank=True)
@@ -29,7 +30,7 @@ class sp(models.Model):
 
 class hoadon(models.Model):
     sohd = models.IntegerField(primary_key=True, auto_created=True)
-    nghd = models.DateTimeField()
+    nghd = models.DateTimeField(auto_now_add=True)
     user_id = models.ForeignKey(useraccount, on_delete=models.CASCADE)#
     trigia = models.IntegerField()#Chua biet co kieu money hay ko
 
