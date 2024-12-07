@@ -6,6 +6,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.test, name='index'),
+    path('product/<str:tensp>/', views.product_detail, name='product_detail'),
 ]
 
 #load image

@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 
+<!-- De load don vi tien -->
 {% load humanize %}
 {% block title %}
   Home
@@ -136,7 +137,7 @@
     <div class="filterable_card"
       id="phone_list">
       {% for product in ListProduct%}
-        <a href="#" class="card" type="{{product.masp}}">
+        <a href="{% url 'product_detail' tensp=product.tensp %}" class="card" type="{{product.masp}}">
           <div>
             <img src="../images/{{ product.hinhanh }}" alt="{{product.tensp}}">
             <div class="card_body">

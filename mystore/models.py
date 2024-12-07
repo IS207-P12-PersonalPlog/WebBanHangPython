@@ -20,7 +20,7 @@ class brands(models.Model):
 
 class sp(models.Model):
     masp = models.AutoField(primary_key=True)
-    tensp = models.CharField(max_length=100)
+    tensp = models.CharField(max_length=100, unique=True)
     dvt = models.CharField(max_length=30, default=1)
     nuocsx = models.CharField(max_length=70, default="China")
     gia = models.IntegerField(default=0)#

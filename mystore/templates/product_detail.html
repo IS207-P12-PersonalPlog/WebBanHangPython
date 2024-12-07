@@ -1,0 +1,45 @@
+{% extends 'base.html'%}
+
+{% load humanize %}
+{% block title %}
+    Product detail
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Product Image Section -->
+        <div class="col-md-6">
+
+            <img src="http://127.0.0.1:8000/images/{{ product.hinhanh }}"
+                class="img-fluid product-img mb-3"
+                alt="{{product.tensp}}">
+        </div>
+        <!-- Product Details Section -->
+        <div class="col-md-6">
+            <h2>{{product.tensp}}</h2>
+            <h5>{{product.brand_id}}</h5>
+            <h4 class="text-danger">Price: {{ product.gia|intcomma }}đ</h4>
+            <!-- Quantity Selector -->
+            <div class="mb-3">
+                <label for="quantity"
+                    class="form-label">Quantity:</label>
+                <input type="number"
+                    id="quantity"
+                    class="form-control w-25"
+                    value="1"
+                    min="1">
+            </div>
+
+            <!-- Add to Cart Button -->
+            <button class="btn btn-primary addToCartBtn">Add to Cart</button>
+
+            <!-- Static Reviews Section -->
+            <div class="mt-5">
+                <h5>Customer Reviews</h5>
+                <p>No reviews yet. Be the first to review this product!</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
