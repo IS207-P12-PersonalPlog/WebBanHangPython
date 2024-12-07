@@ -26,7 +26,7 @@ class sp(models.Model):
     gia = models.IntegerField(default=0)#
     brand_id = models.ForeignKey(brands, on_delete=models.CASCADE)#
     #category_id = models.CharField(max_length=100)#
-    hinhanh = models.ImageField()
+    hinhanh = models.ImageField(upload_to='images/', blank=True, null=True)
 
 class hoadon(models.Model):
     sohd = models.AutoField(primary_key=True)
