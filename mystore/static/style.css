@@ -160,3 +160,101 @@ nav a{
   border-radius: 5px;
   cursor: pointer;
 }
+
+.slide {
+  height: 351px;
+  overflow: hidden;
+}
+
+.img_slide {
+  padding: 0px;
+  margin: 0px;
+}
+
+
+/* card for each product */
+.filterable_card {
+  display: flex;
+  margin-top: 25px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex-basis: 300px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  width: 380px;
+  margin: 10px;
+  height: 510px;
+}
+
+.card_mini {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  width: 95%;
+  margin: 10px;
+  height: 120px;
+  display: flex;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.card_mini img {
+  width: 30%;
+  border-radius: 8px 8px 0 0;
+}
+
+.card_body {
+  padding: 15px 20px 20px;
+}
+
+.cardmini_body {
+  padding: 10px 5px 15px;
+}
+
+.card_title {
+  font-size: 20px;
+  font-weight: 600;
+  color: black;
+  height: 50px;
+}
+
+.cardmini_title {
+  font-size: 15px;
+  font-weight: 600;
+  color: black;
+  height: 20px;
+}
+
+.card_value {
+  font-size: 25px;
+  font-weight: 700;
+  color: red;
+}
+
+.cardmini_value {
+  font-size: 15px;
+  font-weight: 700;
+  color: red;
+  padding: 5px 0 0 0;
+}
+
+.scr_btn {
+  width: 30px;
+  height: 30px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: #e13a3a;
+  color: #fff;
+  text-align: center;
+  z-index: 100;
+  border-radius: 18px;
+  border: none;
+}

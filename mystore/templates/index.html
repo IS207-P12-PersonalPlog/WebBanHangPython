@@ -1,4 +1,6 @@
 {% extends 'base.html'%}
+
+{% load humanize %}
 {% block title %}
   Home
 {% endblock %}
@@ -136,10 +138,10 @@
       {% for product in ListProduct%}
         <a href="#" class="card" type="{{product.masp}}">
           <div>
-            <img src="../images/{{ product.hinhanh }}" alt="">
+            <img src="../images/{{ product.hinhanh }}" alt="{{product.tensp}}">
             <div class="card_body">
               <h6 class="card_title">{{product.tensp}}</h6>
-              <h5 class="card_value">{{product.gia}}</h5>
+              <h5 class="card_value">{{ product.gia|intcomma }}đ</h5>
             </div>
           </div>
         </a>
