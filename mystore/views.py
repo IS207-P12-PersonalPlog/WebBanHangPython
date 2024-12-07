@@ -8,10 +8,10 @@ from mystore.models import sp
 
 def test(request):
     brand = brands.objects.all().values()
-    Sp = sp.objects.all().values()
+    listProduct = sp.objects.all().values()
     template = loader.get_template('index.html')
     context = {
         'brand': brand,
-        'sp': Sp,
+        'ListProduct': listProduct,
     }
     return HttpResponse(template.render(context, request))
