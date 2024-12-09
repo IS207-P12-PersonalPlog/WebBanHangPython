@@ -134,16 +134,17 @@
     </div>
 
     <!-- Card -->
-    <div class="filterable_card"
-      id="phone_list">
-      {% for product in ListProduct%}
-        <a href="{% url 'product_detail' tensp=product.tensp %}" class="card" type="{{product.masp}}">
+    <a href="?sort_by=asc">Sắp xếp tăng dần</a> | <a href="?sort_by=desc">Sắp xếp giảm dần</a>
+    <!-- product_list.html -->
+    <div class="filterable_card" id="phone_list">
+      {% for product in products %}
+        <a href="{% url 'product_detail' tensp=product.tensp %}" class="card {{ product.category_id }}" type="{{ product.masp }}">
           <div>
-            <img src="../images/{{ product.hinhanh }}" alt="{{product.tensp}}">
-            <div class="card_body">
-              <h6 class="card_title">{{product.tensp}}</h6>
-              <h5 class="card_value">{{ product.gia|intcomma }}đ</h5>
-            </div>
+            <img src="../images/{{ product.hinhanh }}" alt="">
+              <div class="card_body">
+                <h6 class="card_title">{{ product.tensp }}</h6>
+                <h5 class="card_value">{{ product.gia|intcomma }}</h5>
+              </div>
           </div>
         </a>
       {% endfor %}

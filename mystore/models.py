@@ -1,3 +1,4 @@
+from django.contrib.admin.filters import FacetsMixin
 from django.db import models
 import uuid
 
@@ -14,9 +15,9 @@ class brands(models.Model):
     brand_id = models.CharField(max_length=100, primary_key=True)
     brand_title = models.CharField(max_length=100)
 
-# categories(models.Model):
-    #category_id = models.CharField(max_length=100, primary_key=True)
-    #category_title = models.CharField(max_length=100)
+class categories(models.Model):
+    category_id = models.CharField(max_length=100, primary_key=True)
+    category_title = models.CharField(max_length=100)
 
 class sp(models.Model):
     masp = models.AutoField(primary_key=True)
@@ -24,8 +25,8 @@ class sp(models.Model):
     dvt = models.CharField(max_length=30, default=1)
     nuocsx = models.CharField(max_length=70, default="China")
     gia = models.IntegerField(default=0)#
-    brand_id = models.ForeignKey(brands, on_delete=models.CASCADE)#
-    #category_id = models.CharField(max_length=100)#
+    brand_id = models.ForeignKey(brands, on_delete=models.CASCADE, null=True)#
+    category_id = models.ForeignKey(categories, on_delete=models.CASCADE, null=True)#
     hinhanh = models.ImageField(blank=True, null=True)
 
 class hoadon(models.Model):

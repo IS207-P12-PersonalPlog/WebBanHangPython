@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('', views.test, name='index'),
+    path('', views.product_card, name='index'),
     path('product/<str:tensp>/', views.product_detail, name='product_detail'),
 ]
 
