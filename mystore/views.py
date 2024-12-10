@@ -19,6 +19,7 @@ def product_detail(request, tensp):
     return render(request, 'product_detail.html', {'product': product})
 
 def product_card(request):
+    """Load sản phẩm theo giá hoặc loại sản phẩm"""
     sort_by = request.GET.get('sort_by', None)
     category = request.GET.get('category', None)
 
@@ -41,6 +42,7 @@ def product_card(request):
 
 
 def user_login(request):
+    """Đăng nhập tài khoản người dùng"""
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
@@ -61,6 +63,7 @@ def user_login(request):
 
 
 def user_register(request):
+    """Đăng ký tài khoản người dùng"""
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():

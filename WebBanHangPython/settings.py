@@ -125,9 +125,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#Đường dẫn thư mục static
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mystore/static'),
 ]
+#Thư mục lưu hình
 MEDIA_URL = '/images/'
-
+#Thư mục lưu hình
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mystore/static/images')
