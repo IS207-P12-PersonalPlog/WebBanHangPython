@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import logout
 
 from mystore.models import brands
 from mystore.models import sp
@@ -77,3 +78,7 @@ def user_register(request):
     }
     template = get_template('register.html')
     return HttpResponse(template.render(context, request))
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')

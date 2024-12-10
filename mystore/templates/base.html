@@ -67,7 +67,13 @@
                         <li>
                           <br>
                           <div class='txt-name'>
-                            <a href='../login'><i class='fa fa-user' style='inline-size: auto; font-size: 20px;'></i> Đăng nhập</a>
+                            <!-- Login and logout user -->
+                            {% if user.is_authenticated %}
+                              <p>Hello, {{ user.username }}</p>
+                              <a href="{% url 'logout' %}">Logout</a>
+                            {% else %}
+                              <a href="{% url 'login' %}">Login</a>
+                            {% endif %}
                           </div>
                         </li>
                       </ul>
