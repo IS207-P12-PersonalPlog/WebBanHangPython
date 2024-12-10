@@ -1,8 +1,8 @@
 from lib2to3.fixes.fix_input import context
 from tempfile import template
-
+from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template import loader
 from django.template.loader import get_template
 from django.urls import reverse
@@ -10,7 +10,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required, user_passes_test
 
+from mystore.forms import AddProductForm
 from mystore.models import brands
 from mystore.models import sp
 
@@ -82,3 +84,24 @@ def user_register(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+def is_manager(user):
+    try:
+        if not user.is_manager:
+            raise Http404
+        return True
+    except:
+        raise Http404
+
+@login_required
+def add_product(request):
+    if request.method == 'POST':
+        form = AddProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Product added Successfuly!')
+            return redirect('add_product')
+    else:
+        form = AddProductForm()
+    context = {'title':'Add Product', 'form':form}
+    return render(request, 'add_product.html', context)
