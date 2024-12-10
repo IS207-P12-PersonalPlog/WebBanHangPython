@@ -13,24 +13,21 @@ def product_detail(request, tensp):
 
 def product_card(request):
     sort_by = request.GET.get('sort_by', None)
+    category = request.GET.get('category', None)
 
+    products = sp.objects.all()
+
+    if category != 'None' and category:
+        #products = filter(lambda x: x.category_id == category, products)
+        products = products.filter(category_id = category)
     if sort_by == 'asc':
-        products = sp.objects.order_by('gia')
+        products = sorted(products, key=(lambda x: x.gia))
     elif sort_by == 'desc':
-        products = sp.objects.order_by('-gia')
-    else:
-        products = sp.objects.all()
-    products_per_page = 9
-    current_page = int(request.GET.get('page', 1))
-    offset = (current_page - 1) * products_per_page
-
-    total_products = sp.objects.count()
-    total_pages = (total_products + products_per_page - 1) // products_per_page
+        products = sorted(products, key=(lambda x: x.gia), reverse=True)
 
     context = {
         'products': products,
-        'current_page': current_page,
-        'total_pages': total_pages,
+        'category': category,
     }
     template = loader.get_template('index.html')
     return HttpResponse(template.render(context, request))

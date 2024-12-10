@@ -121,21 +121,15 @@
   </div>
   <br>
   <div class="container">
-    <h2>ĐIỆN THOẠI NỔI BẬT</h2>
-    <div class="filter-button-group button-group">
-      <button data-filter="*"
-        class="btn btn-outline-secondary">All</button>
-      <button data-filter=".phone"
-        class="btn btn-outline-secondary">Phone</button>
-      <button data-filter=".laptop"
-        class="btn btn-outline-secondary">Laptop</button>
-      <button data-filter=".headphone"
-        class="btn btn-outline-secondary">Headphone</button>
-    </div>
+    <h2>Danh sách sản phẩm</h2>
+    <a class="btn btn-light" href="..">All</a>
+    <a class="btn btn-light" href="?category=phone">Điện thoại</a>
+    <a class="btn btn-light" href="?category=laptop">Laptop</a>
+    <a class="btn btn-light" href="?category=headphone">Tai nghe</a>
+    <a class="btn btn-light" href="?sort_by=asc&category={{ category }}">Sắp xếp tăng dần</a>
+    <a class="btn btn-light" href="?sort_by=desc&category={{ category }}">Sắp xếp giảm dần</a>
 
     <!-- Card -->
-    <a href="?sort_by=asc">Sắp xếp tăng dần</a> | <a href="?sort_by=desc">Sắp xếp giảm dần</a>
-    <!-- product_list.html -->
     <div class="filterable_card" id="phone_list">
       {% for product in products %}
         <a href="{% url 'product_detail' tensp=product.tensp %}" class="card {{ product.category_id }}" type="{{ product.masp }}">
