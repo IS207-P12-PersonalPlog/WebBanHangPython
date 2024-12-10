@@ -6,10 +6,10 @@ import uuid
 #Chua biet dat the ngoai
 class useraccount(models.Model):
     user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_name = models.CharField(unique=True, max_length=40, default='Unknown', null=True)
     user_password = models.CharField(max_length=40)
     ho_ten = models.CharField(max_length=40, default="Nguyen Van A")
     so_dt = models.CharField(max_length=10, default=None, blank=True)
-    allow_edit = models.BooleanField(default=False)
 
 class brands(models.Model):
     brand_id = models.CharField(max_length=100, primary_key=True)
