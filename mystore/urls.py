@@ -11,7 +11,7 @@ urlpatterns = [
     path('register/', views.user_register, name='register'),
     path('logout/', views.user_logout, name='logout'),
     path('add_product/', views.add_product, name='add_product'),
-    path('admin/', views.admin_page, name='admin'),
+    path('adminpage/', views.admin_page, name='adminpage'),
 ]
 
 #load image
