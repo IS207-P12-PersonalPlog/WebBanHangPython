@@ -1,3 +1,5 @@
+from gc import get_objects
+
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
@@ -105,3 +107,18 @@ def add_product(request):
         form = AddProductForm()
     context = {'title':'Add Product', 'form':form}
     return render(request, 'add_product.html', context)
+
+@user_passes_test(is_manager)
+@login_required
+def edit_product(request, masp):
+    product = sp.objects.get(masp=masp)
+    if request.method == 'POST':
+        form = EditProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Product has been updated', 'success')
+            return redirect('list_product')
+    else:
+        form = EditProductForm(instance=product)
+    context = {'title': 'Edit Product', 'form':form}
+    return render(request, 'edit_product.html', context)

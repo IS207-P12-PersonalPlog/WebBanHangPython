@@ -27,7 +27,7 @@
             <td>{{ product.category_id }}</td>
             <td>{{ product.hinhanh }}</td>
             <td><a href="#">Delete</a></td>
-            <td><a href="#">Edit</a></td>
+            <td><a href="{% url 'edit_product' product.masp %}">Edit</a></td>
         </tr>
         {% endfor %}
     </tbody>

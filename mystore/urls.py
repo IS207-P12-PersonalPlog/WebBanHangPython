@@ -13,6 +13,7 @@ urlpatterns = [
     path('add_product/', views.add_product, name='add_product'),
     path('adminpage/', views.admin_page, name='adminpage'),
     path('list_product/', views.list_product, name='list_product'),
+    path('edit_product/<int:masp>', views.edit_product, name='edit_product'),
 ]
 
 #load image
