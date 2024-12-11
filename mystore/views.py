@@ -122,3 +122,10 @@ def edit_product(request, masp):
         form = EditProductForm(instance=product)
     context = {'title': 'Edit Product', 'form':form}
     return render(request, 'edit_product.html', context)
+
+@user_passes_test(is_manager)
+@login_required
+def delete_product(request, masp):
+    product = sp.objects.filter(masp=masp).delete()
+    messages.success(request, 'product has been deleted!', 'success')
+    return redirect('list_product')
