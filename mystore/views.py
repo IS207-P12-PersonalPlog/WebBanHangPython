@@ -1,10 +1,5 @@
-from gc import get_objects
-
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
-from django.template import loader
-from django.template.loader import get_template
-from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
@@ -38,8 +33,7 @@ def product_card(request):
         'products': products,
         'category': category,
     }
-    template = loader.get_template('index.html')
-    return HttpResponse(template.render(context, request))
+    return render(request, 'index.html', context)
 
 
 def user_login(request):
@@ -59,8 +53,7 @@ def user_login(request):
     context = {
         'form': form,
     }
-    template = get_template('login.html')
-    return HttpResponse(template.render(context, request))
+    return render(request, 'login.html', context)
 
 def user_register(request):
     """Đăng ký tài khoản người dùng"""
@@ -75,17 +68,12 @@ def user_register(request):
     return render(request, 'register.html', context)
 
 def user_logout(request):
+    """Đăng xuất tài khoản người dùng"""
     logout(request)
     return redirect('login')
 
-def admin_page(request):
-    return render(request, 'admin.html')
-
-def list_product(request):
-    products = sp.objects.all()
-    return render(request, 'list_product.html', {'products': products})
-
 def is_manager(useraccount):
+    """Kiểm tra có phải admin"""
     try:
         if not useraccount.is_superuser:
             raise Http404
@@ -94,8 +82,19 @@ def is_manager(useraccount):
         raise Http404
 
 @user_passes_test(is_manager)
-@login_required
+def admin_page(request):
+    """Trang dành riêng cho admin"""
+    return render(request, 'admin.html')
+
+@user_passes_test(is_manager)
+def list_product(request):
+    """Hiển thị danh sách sản phẩm cho admin"""
+    products = sp.objects.all()
+    return render(request, 'list_product.html', {'products': products})
+
+@user_passes_test(is_manager)
 def add_product(request):
+    """Thêm sản phẩm mới chỉ admin có thể thực hiện"""
     if request.method == 'POST':
         form = AddProductForm(request.POST, request.FILES)
         if form.is_valid():
@@ -107,8 +106,8 @@ def add_product(request):
     return render(request, 'add_product.html', context)
 
 @user_passes_test(is_manager)
-@login_required
 def edit_product(request, masp):
+    """Chỉnh sửa sản phẩm chỉ admin có thể thực hiện"""
     product = sp.objects.get(masp=masp)
     if request.method == 'POST':
         form = EditProductForm(request.POST, request.FILES, instance=product)
@@ -121,7 +120,7 @@ def edit_product(request, masp):
     return render(request, 'edit_product.html', context)
 
 @user_passes_test(is_manager)
-@login_required
 def delete_product(request, masp):
+    """Xóa sản phẩm chỉ admin có thể thực hiện"""
     product = sp.objects.filter(masp=masp).delete()
     return redirect('list_product')

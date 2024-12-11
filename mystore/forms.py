@@ -10,7 +10,7 @@ class AddProductForm(ModelForm):
         fields = ['tensp', 'dvt', 'nuocsx', 'gia', 'brand_id', 'category_id', 'hinhanh']
 
     widgets = {
-        'hinhanh': forms.FileInput(attrs={'class': 'form-control-file'}),
+        'hinhanh': forms.FileInput(),
     }
 
 class EditProductForm(ModelForm):
@@ -19,5 +19,5 @@ class EditProductForm(ModelForm):
         fields = ['tensp', 'dvt', 'nuocsx', 'gia', 'brand_id', 'category_id', 'hinhanh']
 
     widgets = {
-        'hinhanh': forms.FileInput(attrs={'class': 'form-control-file'}),
+        'hinhanh': forms.FileInput(),
     }
