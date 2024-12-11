@@ -1,0 +1,36 @@
+{% block content %}
+{% load humanize %}
+<table>
+    <thead>
+        <tr>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>DVT</th>
+            <th>Nước sản xuất</th>
+            <th>Giá</th>
+            <th>Brand ID</th>
+            <th>Category ID</th>
+            <th>Hình ảnh</th>
+            <th>Xóa</th>
+            <th>Chỉnh sửa</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.masp }}</td>
+            <td>{{ product.tensp }}</td>
+            <td>{{ product.dvt }}</td>
+            <td>{{ product.nuocsx }}</td>
+            <td>{{ product.gia|intcomma }}</td>
+            <td>{{ product.brand_id }}</td>
+            <td>{{ product.category_id }}</td>
+            <td>{{ product.hinhanh }}</td>
+            <td><a href="#">Delete</a></td>
+            <td><a href="#">Edit</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'adminpage' %}"><h2>Admin page</h2></a>
+{% endblock %}

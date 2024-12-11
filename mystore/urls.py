@@ -12,6 +12,7 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('add_product/', views.add_product, name='add_product'),
     path('adminpage/', views.admin_page, name='adminpage'),
+    path('list_product/', views.list_product, name='list_product'),
 ]
 
 #load image

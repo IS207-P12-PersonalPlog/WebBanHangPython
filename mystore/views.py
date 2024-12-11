@@ -78,8 +78,11 @@ def user_logout(request):
     return redirect('login')
 
 def admin_page(request):
-
     return render(request, 'admin.html')
+
+def list_product(request):
+    products = sp.objects.all()
+    return render(request, 'list_product.html', {'products': products})
 
 def is_manager(useraccount):
     try:
