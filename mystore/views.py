@@ -64,12 +64,12 @@ def user_login(request):
 def user_register(request):
     """Đăng ký tài khoản người dùng"""
     if request.method == 'POST':
-        form = registerForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('login')
     else:
-        form = registerForm()
+        form = UserCreationForm()
     context = {'title': 'Register', 'form': form}
     return render(request, 'register.html', context)
 
@@ -79,7 +79,7 @@ def user_logout(request):
 
 def is_manager(useraccount):
     try:
-        if not useraccount.is_manager:
+        if not useraccount.is_superuser:
             raise Http404
         return True
     except:
