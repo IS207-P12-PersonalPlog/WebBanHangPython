@@ -77,6 +77,10 @@ def user_logout(request):
     logout(request)
     return redirect('login')
 
+def admin_page(request):
+
+    return render(request, 'admin.html')
+
 def is_manager(useraccount):
     try:
         if not useraccount.is_superuser:
