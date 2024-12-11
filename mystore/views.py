@@ -1,5 +1,3 @@
-from lib2to3.fixes.fix_input import context
-from tempfile import template
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
@@ -12,9 +10,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-from mystore.forms import AddProductForm
-from mystore.models import brands
-from mystore.models import sp
+from mystore.forms import *
+from mystore.models import *
 
 
 def product_detail(request, tensp):
@@ -64,35 +61,31 @@ def user_login(request):
     template = get_template('login.html')
     return HttpResponse(template.render(context, request))
 
-
 def user_register(request):
     """Đăng ký tài khoản người dùng"""
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = registerForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')  # Chuyển hướng sau khi đăng ký thành công
+            return redirect('login')
     else:
-        form = UserCreationForm()
-
-    context = {
-        'form': form,
-    }
-    template = get_template('register.html')
-    return HttpResponse(template.render(context, request))
+        form = registerForm()
+    context = {'title': 'Register', 'form': form}
+    return render(request, 'register.html', context)
 
 def user_logout(request):
     logout(request)
     return redirect('login')
 
-def is_manager(user):
+def is_manager(useraccount):
     try:
-        if not user.is_manager:
+        if not useraccount.is_manager:
             raise Http404
         return True
     except:
         raise Http404
 
+@user_passes_test(is_manager)
 @login_required
 def add_product(request):
     if request.method == 'POST':
