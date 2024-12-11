@@ -1,6 +1,5 @@
 from gc import get_objects
 
-from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.template import loader
@@ -101,8 +100,7 @@ def add_product(request):
         form = AddProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Product added Successfuly!')
-            return redirect('add_product')
+            return redirect('list_product')
     else:
         form = AddProductForm()
     context = {'title':'Add Product', 'form':form}
@@ -113,10 +111,9 @@ def add_product(request):
 def edit_product(request, masp):
     product = sp.objects.get(masp=masp)
     if request.method == 'POST':
-        form = EditProductForm(request.POST, instance=product)
+        form = EditProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Product has been updated', 'success')
             return redirect('list_product')
     else:
         form = EditProductForm(instance=product)
@@ -127,5 +124,4 @@ def edit_product(request, masp):
 @login_required
 def delete_product(request, masp):
     product = sp.objects.filter(masp=masp).delete()
-    messages.success(request, 'product has been deleted!', 'success')
     return redirect('list_product')

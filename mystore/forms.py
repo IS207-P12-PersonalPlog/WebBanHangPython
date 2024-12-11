@@ -9,7 +9,15 @@ class AddProductForm(ModelForm):
         model = sp
         fields = ['tensp', 'dvt', 'nuocsx', 'gia', 'brand_id', 'category_id', 'hinhanh']
 
+    widgets = {
+        'hinhanh': forms.FileInput(attrs={'class': 'form-control-file'}),
+    }
+
 class EditProductForm(ModelForm):
     class Meta:
         model = sp
         fields = ['tensp', 'dvt', 'nuocsx', 'gia', 'brand_id', 'category_id', 'hinhanh']
+
+    widgets = {
+        'hinhanh': forms.FileInput(attrs={'class': 'form-control-file'}),
+    }
