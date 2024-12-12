@@ -21,18 +21,21 @@
             <h5>{{product.brand_id}}</h5>
             <h4 class="text-danger">Price: {{ product.gia|intcomma }}đ</h4>
             <!-- Quantity Selector -->
-            <div class="mb-3">
-                <label for="quantity"
-                    class="form-label">Quantity:</label>
-                <input type="number"
-                    id="quantity"
-                    class="form-control w-25"
-                    value="1"
-                    min="1">
-            </div>
-
-            <!-- Add to Cart Button -->
-            <button class="btn btn-primary addToCartBtn">Add to Cart</button>
+            <form method="post" action="{% url 'add_to_cart' %}">
+                {% csrf_token %}
+                <input type="hidden" name="ma_sp" value="{{product.masp}}">
+                <div class="mb-3">
+                    <label for="quantity"
+                        class="form-label">Quantity:</label>
+                    <input type="number"
+                        id="quantity"
+                        class="form-control w-25"
+                        value="1"
+                        min="1" name="quantity">
+                </div>
+                <!-- Add to Cart Button -->
+                <button type="submit" class="btn btn-primary addToCartBtn">Add to Cart</button>
+            </form>
 
             <!-- Static Reviews Section -->
             <div class="mt-5">

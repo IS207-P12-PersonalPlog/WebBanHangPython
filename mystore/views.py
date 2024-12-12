@@ -35,6 +35,20 @@ def product_card(request):
     }
     return render(request, 'index.html', context)
 
+def giohang(request):
+    cart_items = cartitem.objects.all()
+    return render(request, 'giohang.html', {'cart_items': cart_items})
+
+def add_to_cart(request):
+    if request.method == 'POST':
+        masp = request.POST.get('masp')
+        quantity = request.POST.get('quantity')
+        cart_item = cartitem.objects.get_or_create(sp=sp.objects.get(masp=masp), user=request.user)
+        cart_item.sl += quantity
+        cart_item.save()
+        return redirect('giohang')
+    return redirect('product_detail')
+    
 
 def user_login(request):
     """Đăng nhập tài khoản người dùng"""
