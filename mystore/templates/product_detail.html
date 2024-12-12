@@ -23,7 +23,7 @@
             <!-- Quantity Selector -->
             <form method="post" action="{% url 'add_to_cart' %}">
                 {% csrf_token %}
-                <input type="hidden" name="ma_sp" value="{{product.masp}}">
+                <input type="hidden" name="masp" value="{{product.masp}}">
                 <div class="mb-3">
                     <label for="quantity"
                         class="form-label">Quantity:</label>

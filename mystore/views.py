@@ -44,8 +44,8 @@ def add_to_cart(request):
         masp = request.POST.get('masp')
         quantity = request.POST.get('quantity')
         cart_item = cartitem.objects.get_or_create(sp=sp.objects.get(masp=masp), user=request.user)
-        cart_item.sl += quantity
-        cart_item.save()
+        cart_item[0].sl += int(quantity)
+        cart_item[0].save()
         return redirect('giohang')
     return redirect('product_detail')
     

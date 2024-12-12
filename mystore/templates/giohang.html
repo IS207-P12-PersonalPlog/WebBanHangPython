@@ -1,8 +1,7 @@
 {% extends 'base.html'%}
 
 {% block body %}
-
-{% if cart_items.length %}
+{% if cart_items|length %}
 
 {%for cart_item in cart_items %}
 
