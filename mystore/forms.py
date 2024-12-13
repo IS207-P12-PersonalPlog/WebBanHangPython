@@ -21,9 +21,3 @@ class EditProductForm(ModelForm):
     widgets = {
         'hinhanh': forms.FileInput(),
     }
-
-class AddCartForm(ModelForm):
-    class Meta:
-        model = sp
-        fields = ['masp']
-        quantity = forms.IntegerField()

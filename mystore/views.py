@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, Http404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
@@ -36,18 +36,22 @@ def product_card(request):
     return render(request, 'index.html', context)
 
 def giohang(request):
-    cart_items = cartitem.objects.all()
-    return render(request, 'giohang.html', {'cart_items': cart_items})
+    cart = request.session.get('cart', {})
+    return render(request, 'giohang.html', {'cart': cart})
 
 def add_to_cart(request):
-    if request.method == 'POST':
-        masp = request.POST.get('masp')
-        quantity = request.POST.get('quantity')
-        cart_item = cartitem.objects.get_or_create(sp=sp.objects.get(masp=masp), user=request.user)
-        cart_item[0].sl += int(quantity)
-        cart_item[0].save()
-        return redirect('giohang')
-    return redirect('product_detail')
+    if request.method != 'POST': return redirect('product_detail')
+    masp = request.POST.get('masp')
+    quantity = request.POST.get('quantity')
+    product = get_object_or_404(sp,pk=masp)
+    cart = request.session.get('cart', {})
+    cart_item = cart.get(masp)
+    if cart_item: cart_item['quantity'] += int(quantity)
+    else:
+        cart_item = {'masp': masp, 'quantity': int(quantity), 'tensp': product.tensp, 'gia': product.gia}
+    cart[masp] = cart_item
+    request.session['cart'] = cart
+    return redirect('giohang')
     
 
 def user_login(request):

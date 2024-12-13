@@ -3,22 +3,18 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
-# Create your models here.
-class useraccount(models.Model):
-    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user_name = models.CharField(unique=True, max_length=40, default='Unknown', null=True)
-    user_password = models.CharField(max_length=40)
-    ho_ten = models.CharField(max_length=40, default="Nguyen Van A")
-    so_dt = models.CharField(max_length=10, default=None, blank=True)
-    is_manager = models.BooleanField(default=False)
-
+# # Create your models here.
 class brands(models.Model):
     brand_id = models.CharField(max_length=100, primary_key=True)
     brand_title = models.CharField(max_length=100)
+    def __str__(self):
+        return self.brand_title
 
 class categories(models.Model):
     category_id = models.CharField(max_length=100, primary_key=True)
     category_title = models.CharField(max_length=100)
+    def __str__(self):
+        return self.category_title
 
 class sp(models.Model):
     masp = models.AutoField(primary_key=True)
@@ -31,24 +27,21 @@ class sp(models.Model):
     hinhanh = models.ImageField(blank=True, null=True)
 
     def __str__(self):
-        return self.tensp
+        return f'{self.category_id} - {self.tensp}'
 
 class hoadon(models.Model):
     sohd = models.AutoField(primary_key=True)
     nghd = models.DateTimeField(auto_now_add=True)
-    user_id = models.ForeignKey(useraccount, on_delete=models.CASCADE)#
+    # user_id = models.ForeignKey(useraccount, on_delete=models.CASCADE)#
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     trigia = models.IntegerField()#
+    def __str__(self):
+        return f'{self.sohd} - {self.user.normalize_username()}'
 
 class cthd(models.Model):
     sohd = models.ForeignKey(hoadon, on_delete=models.CASCADE)#
     masp = models.ForeignKey(sp, on_delete=models.CASCADE) #
     sl = models.SmallIntegerField()
-
-class cartitem(models.Model):
-    sp = models.ForeignKey(sp, on_delete=models.CASCADE)
-    sl = models.PositiveIntegerField(default=0)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    ngay_them = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
-        return f'{self.sl} x {self.sp.tensp}'
+        return f'{self.sohd}'
+

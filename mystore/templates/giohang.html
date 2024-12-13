@@ -1,13 +1,12 @@
 {% extends 'base.html'%}
 
 {% block body %}
-{% if cart_items|length %}
+{% if cart|length %}
 
-{%for cart_item in cart_items %}
+{%for cart_item in cart %}
 
 <div>
-    <h1>{{cart_item.sp.tensp}}</h1>
-    <h1>{{cart_item.sp.gia}}</h1>
+    <h1>{{ cart_item.tensp }}</h1>
 </div>
 
 {%endfor%}
