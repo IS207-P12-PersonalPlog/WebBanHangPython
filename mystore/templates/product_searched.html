@@ -1,0 +1,30 @@
+{% extends 'base.html'%}
+<!-- De load don vi tien -->
+{% load humanize %}
+{% block title %}
+  Product searched
+{% endblock %}
+{% block body %}
+
+<main>
+  <br>
+  <div class="container">
+
+    <!-- product_card -->
+    <div class="filterable_card">
+      {% for product in ds_sp %}
+        <a href="{% url 'product_detail' tensp=product.tensp %}" class="card {{ product.category_id }}" type="{{ product.masp }}">
+          <div>
+            <img src="../images/{{ product.hinhanh }}" alt="">
+              <div class="card_body">
+                <h6 class="card_title">{{ product.tensp }}</h6>
+                <h5 class="card_value">{{ product.gia|intcomma }}đ</h5>
+              </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</main>
+
+{% endblock %}

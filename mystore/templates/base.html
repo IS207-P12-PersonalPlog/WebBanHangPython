@@ -40,11 +40,10 @@
               <div class="header-top-left">
                 <!-- Search product -->
                 <div class="search">
-                  <form action="" method="get">
-                    <input type="text" placeholder="Tìm kiếm" class="search-product">
-                    <div class="search_product">
-
-                    </div>
+                  <form action="{% url 'search_product' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Tìm kiếm" class="search-product" name="searched">
+                    <button type="submit">Tìm</button>
                   </form>
                 </div>
               </div>

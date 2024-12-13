@@ -142,3 +142,11 @@ def delete_product(request, masp):
     """Xóa sản phẩm chỉ admin có thể thực hiện"""
     product = sp.objects.filter(masp=masp).delete()
     return redirect('list_product')
+
+def search_product(request):
+    ds_sp = sp
+    if request.method == "POST":
+        ch = request.POST.get('searched')
+        ds_sp = sp.objects.filter(tensp__contains=ch)
+    context = {'ds_sp': ds_sp}
+    return render(request, 'product_searched.html', context)
