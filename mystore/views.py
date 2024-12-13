@@ -9,6 +9,34 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from mystore.forms import *
 from mystore.models import *
 
+CART_SESSION_ID = 'cart'
+
+class Cart:
+    def __init__(self, request):
+        self.session = request.session
+        cart = self.session.get(CART_SESSION_ID)
+        if not cart:
+            cart = self.session[CART_SESSION_ID] = {}
+        self.cart = cart
+
+    def __iter__(self):
+        product_ids = self.cart.keys()
+        cart = []
+        for product_id in product_ids:
+            cart.append(self.cart[product_id])
+        return iter(cart)
+    
+    def add(self, masp, quantity):
+        product = get_object_or_404(sp,pk=masp)
+        masp = str(masp)
+        if masp not in self.cart:
+            self.cart[masp] = {'quantity': 0, 'tensp': product.tensp, 'gia': product.gia, 'hinhanh': product.hinhanh}
+        self.cart[masp]['quantity'] += int(quantity)
+        self.save()
+
+    def save(self):
+        self.session.modified = True
+
 
 def product_detail(request, tensp):
     product = sp.objects.get(tensp=tensp)
@@ -36,21 +64,15 @@ def product_card(request):
     return render(request, 'index.html', context)
 
 def giohang(request):
-    cart = request.session.get('cart', {})
+    cart = Cart(request)
     return render(request, 'giohang.html', {'cart': cart})
 
 def add_to_cart(request):
     if request.method != 'POST': return redirect('product_detail')
     masp = request.POST.get('masp')
     quantity = request.POST.get('quantity')
-    product = get_object_or_404(sp,pk=masp)
-    cart = request.session.get('cart', {})
-    cart_item = cart.get(masp)
-    if cart_item: cart_item['quantity'] += int(quantity)
-    else:
-        cart_item = {'masp': masp, 'quantity': int(quantity), 'tensp': product.tensp, 'gia': product.gia}
-    cart[masp] = cart_item
-    request.session['cart'] = cart
+    cart = Cart(request)
+    cart.add(masp=masp, quantity=quantity)
     return redirect('giohang')
     
 

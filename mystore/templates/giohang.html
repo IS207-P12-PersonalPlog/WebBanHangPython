@@ -1,17 +1,51 @@
 {% extends 'base.html'%}
 
 {% block body %}
-{% if cart|length %}
-
-{%for cart_item in cart %}
-
-<div>
-    <h1>{{ cart_item.tensp }}</h1>
+<!-- bat buoc phai la tongtien=0 -->
+{% with tongtien=0 %}
+<div class="container">
+    <div class="container block-info mt-3">
+        <div id="listItemSuperCart">
+            {%for cart_item in cart%}
+            <div class="block__product-item__outer">
+            <div class="block__product-item">
+                <div class="checkbox-product">
+                <img src="http://127.0.0.1:8000/images/{{ cart_item.hinhanh }}" 
+                alt="" class="product-img">
+                </div>
+                <div class="product-info">
+                <div class="d-flex justify-content-between align-items-start">
+                    <a href="" class="product-name">{{ cart_item.tensp }}</a>
+                    <button class="removeItem" value="">Xóa</button>
+                </div>
+                <div class="d-flex justify-content-between align-items-end">
+                    <div class="block-box-price">{{ cart_item.gia }}</div>
+                    <div class="action d-flex testing-class">
+                    <button class="minus d-flex justify-content-center align-items-center" value="">-</button>
+                    <input type="text" readonly value="{{ cart_item.quantity }}">
+                    <button class="plus d-flex justify-content-center align-items-center" value="">+</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+    <div id="stickyBottomBar">
+        <div class="temp-info d-flex flex-column">
+        <div class="price-temp">
+            <p>
+            Tạm tính: {{tongtien}}
+            <span>
+            </span>
+            </p>
+        </div>
+        </div>
+        <button class="btn-action purchase">
+        Mua Ngay
+        </button>
+    </div>
 </div>
-
-{%endfor%}
-{%else%}
-<h1>Gio hang dang trong</h1>
-{%endif%}
-
+{%endwith%}
 {% endblock %}
