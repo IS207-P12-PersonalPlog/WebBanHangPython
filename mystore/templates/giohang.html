@@ -2,7 +2,6 @@
 
 {% block body %}
 <!-- bat buoc phai la tongtien=0 -->
-{% with tongtien=0 %}
 <div class="container">
     <div class="container block-info mt-3">
         <div id="listItemSuperCart">
@@ -16,14 +15,23 @@
                 <div class="product-info">
                 <div class="d-flex justify-content-between align-items-start">
                     <a href="" class="product-name">{{ cart_item.tensp }}</a>
-                    <button class="removeItem" value="">Xóa</button>
+                    <form method="post" action="{% url 'modify_cart' %}">
+                        {% csrf_token %}
+                        <button type="submit" name="order" class="removeItem" value="{{cart_item.masp}}-delete">Xóa</button>
+                    </form>
                 </div>
                 <div class="d-flex justify-content-between align-items-end">
                     <div class="block-box-price">{{ cart_item.gia }}</div>
                     <div class="action d-flex testing-class">
-                    <button class="minus d-flex justify-content-center align-items-center" value="">-</button>
-                    <input type="text" readonly value="{{ cart_item.quantity }}">
-                    <button class="plus d-flex justify-content-center align-items-center" value="">+</button>
+                        <form method="post" action="{% url 'modify_cart' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="minus d-flex justify-content-center align-items-center" value="{{cart_item.masp}}-minus" name="order">-</button>
+                        </form>
+                        <input type="text" readonly value="{{ cart_item.quantity }}">
+                        <form method="post" action="{% url 'modify_cart' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="plus d-flex justify-content-center align-items-center" value="{{cart_item.masp}}-plus" name="order">+</button>
+                        </form>
                     </div>
                 </div>
                 </div>
@@ -47,5 +55,4 @@
         </button>
     </div>
 </div>
-{%endwith%}
 {% endblock %}

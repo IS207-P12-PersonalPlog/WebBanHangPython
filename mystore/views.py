@@ -30,9 +30,24 @@ class Cart:
         product = get_object_or_404(sp,pk=masp)
         masp = str(masp)
         if masp not in self.cart:
-            self.cart[masp] = {'quantity': 0, 'tensp': product.tensp, 'gia': product.gia, 'hinhanh' : product.hinhanh.path}
+            self.cart[masp] = {'quantity': 0, 'tensp': product.tensp, 'gia': product.gia, 'hinhanh' : product.hinhanh.path, 'masp': masp}
         self.cart[masp]['quantity'] += int(quantity)
         self.save()
+
+    def modify_cart(self, masp, order):
+        masp = str(masp)
+        if masp not in self.cart: pass
+        if order == 'minus':
+            self.cart[masp]['quantity'] -= 1
+            if self.cart[masp]['quantity'] == 0: del self.cart[masp]
+        elif order == 'plus':
+            self.cart[masp]['quantity'] += 1
+        elif order == 'delete':
+            del self.cart[masp]
+        self.save()
+
+    def get_total_price(self):
+        return sum(cart_item['gia']*cart_item['quantity'] for cart_item in self)
 
     def save(self):
         self.session.modified = True
@@ -65,7 +80,8 @@ def product_card(request):
 
 def giohang(request):
     cart = Cart(request)
-    return render(request, 'giohang.html', {'cart': cart})
+    tongtien = cart.get_total_price()
+    return render(request, 'giohang.html', {'cart': cart, 'tongtien': tongtien})
 
 def add_to_cart(request):
     if request.method != 'POST': return redirect('product_detail')
@@ -74,7 +90,13 @@ def add_to_cart(request):
     cart = Cart(request)
     cart.add(masp=masp, quantity=quantity)
     return redirect('giohang')
-    
+
+def modify_cart(request):
+    if request.method != 'POST': return redirect('giohang')
+    masp, order = request.POST.get('order').split('-')
+    cart = Cart(request)
+    cart.modify_cart(masp, order)
+    return redirect('giohang')
 
 def user_login(request):
     """Đăng nhập tài khoản người dùng"""
