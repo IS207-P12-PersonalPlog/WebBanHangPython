@@ -30,7 +30,7 @@ class Cart:
         product = get_object_or_404(sp,pk=masp)
         masp = str(masp)
         if masp not in self.cart:
-            self.cart[masp] = {'quantity': 0, 'tensp': product.tensp, 'gia': product.gia, 'hinhanh': product.hinhanh}
+            self.cart[masp] = {'quantity': 0, 'tensp': product.tensp, 'gia': product.gia, 'hinhanh' : product.hinhanh.path}
         self.cart[masp]['quantity'] += int(quantity)
         self.save()
 
