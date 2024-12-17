@@ -220,3 +220,26 @@ def thanhtoan(request, user_id):
 
     cart.clear()
     return redirect('index')
+
+def brand_product(request):
+    """Liệt kê các sản phẩm theo brand"""
+    brand_id = request.GET.get('brand_id', None)
+    category_id = request.GET.get('category_id', None)
+    sort_by = request.GET.get('sort_by', None)
+    products = sp.objects.all()
+
+    if category_id != 'None' and category_id:
+        products = products.filter(category_id=category_id)
+    if brand_id != 'None' and brand_id:
+        products = products.filter(brand_id=brand_id)
+    if sort_by == 'asc':
+        products = sorted(products, key=(lambda x: x.gia))
+    elif sort_by == 'desc':
+        products = sorted(products, key=(lambda x: x.gia), reverse=True)
+
+    context = {
+        'products': products,
+        'brand_id': brand_id,
+        'category_id': category_id,
+    }
+    return render(request, 'brand_product.html', context)

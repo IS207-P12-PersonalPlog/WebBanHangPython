@@ -1,0 +1,144 @@
+{% extends 'base.html'%}
+
+<!-- De load don vi tien -->
+{% load humanize %}
+{% block title %}
+  Home
+{% endblock %}
+
+{% block body %}
+<main>
+  <br>
+  <div class="container">
+    <!-- Filter and sort card -->
+    <h2>Danh sách sản phẩm</h2>
+    <a class="btn btn-light" href="?sort_by=asc&category_id={{ category_id }}&brand_id={{ brand_id }}">Sắp xếp tăng dần</a>
+    <a class="btn btn-light" href="?sort_by=desc&category_id={{ category_id }}&brand_id={{ brand_id }}">Sắp xếp giảm dần</a>
+
+    <!-- product_card -->
+    <div class="filterable_card">
+      {% for product in products %}
+        <a href="{% url 'product_detail' tensp=product.tensp %}" class="card {{ product.category_id }}" type="{{ product.masp }}">
+          <div>
+            <img src="../images/{{ product.hinhanh }}" alt="">
+              <div class="card_body">
+                <h6 class="card_title">{{ product.tensp }}</h6>
+                <h5 class="card_value">{{ product.gia|intcomma }}đ</h5>
+              </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</main>
+<footer class="text-center text-lg-start bg-body-tertiary text-muted">
+  <!-- Section: Social media -->
+  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+    <!-- Left -->
+    <div class="me-5 d-none d-lg-block">
+      <span>Get connected with us on social networks:</span>
+    </div>
+    <!-- Left -->
+
+    <!-- Right -->
+    <div>
+      <a href="#"
+        onclick="window.open('https://github.com/IS207-P12-PersonalPlog/IS207-PersonalBlog')"
+        class="me-4 text-reset">
+        <i class="fa fa-github"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </section>
+  <!-- Section: Social media -->
+
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>CELLO
+          </h6>
+          <p>
+            Here you can use rows and columns to organize your footer content. Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit.
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Products
+          </h6>
+          <p>
+            <a href="#!"
+              class="text-reset">Angular</a>
+          </p>
+          <p>
+            <a href="#!"
+              class="text-reset">React</a>
+          </p>
+          <p>
+            <a href="#!"
+              class="text-reset">Vue</a>
+          </p>
+          <p>
+            <a href="#!"
+              class="text-reset">Laravel</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Useful links
+          </h6>
+          <p>
+            <a href="#!"
+              class="text-reset">Pricing</a>
+          </p>
+          <p>
+            <a href="#!"
+              class="text-reset">Settings</a>
+          </p>
+          <p>
+            <a href="#!"
+              class="text-reset">Orders</a>
+          </p>
+          <p>
+            <a href="#!"
+              class="text-reset">Help</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+          <p><i class="fas fa-home me-3"></i>Thành phố Hồ Chí Minh, Việt Nam</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+            info@example.com
+          </p>
+          <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+</footer>
+<button class="scrollup scr_btn"><i class="fa fa-angle-up" style="font-size: 20px;"></i></button>
+
+{% endblock %}
