@@ -6,7 +6,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('index/', views.product_card, name='index'),
-    path('', views.product_card, name= ''),
+    path('', views.init_data, name= ''),
     path('giohang/' , views.giohang, name='giohang'),
     path('add_to_cart/', views.add_to_cart, name='add_to_cart'),
     path('modify_cart/', views.modify_cart, name='modify_cart'),
