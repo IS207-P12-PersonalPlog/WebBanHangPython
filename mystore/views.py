@@ -66,6 +66,7 @@ def product_detail(request, tensp):
     return render(request, 'product_detail.html', {'product': product})
 
 def init_data(request):
+    """Khởi tạo dữ liệu cho brands, categories và sp"""
     if not User.objects.filter(username='admin').exists():
         superuser = User.objects.create_superuser(username='admin', email='admin@example.com', password='admin')
 
@@ -312,9 +313,12 @@ def product_card(request):
     return render(request, 'index.html', context)
 
 def giohang(request):
-    cart = Cart(request)
-    tongtien = cart.get_total_price()
-    return render(request, 'giohang.html', {'cart': cart, 'tongtien': tongtien})
+    """Yêu cầu đăng nhập để dùng giỏ hàng"""
+    if request.user.is_authenticated:
+        cart = Cart(request)
+        tongtien = cart.get_total_price()
+        return render(request, 'giohang.html', {'cart': cart, 'tongtien': tongtien})
+    return redirect('login')
 
 def add_to_cart(request):
     if request.method != 'POST': return redirect('product_detail')
