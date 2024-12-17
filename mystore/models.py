@@ -36,12 +36,12 @@ class hoadon(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     trigia = models.IntegerField()#
     def __str__(self):
-        return f'{self.sohd} - {self.user.normalize_username()}'
+        return f'{self.sohd} - {self.user}'
 
 class cthd(models.Model):
     sohd = models.ForeignKey(hoadon, on_delete=models.CASCADE)#
     masp = models.ForeignKey(sp, on_delete=models.CASCADE) #
     sl = models.SmallIntegerField()
     def __str__(self):
-        return f'{self.sohd}'
+        return f'{self.sohd} - {self.masp} - {self.sl}'
 

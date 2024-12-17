@@ -20,6 +20,7 @@ urlpatterns = [
     path('edit_product/<int:masp>', views.edit_product, name='edit_product'),
     path('delete_product/<int:masp>', views.delete_product, name='delete_product'),
     path('search_product/', views.search_product, name='search_product'),
+    path('thanhtoan/<str:user_id>', views.thanhtoan, name='thanhtoan'),
 ]
 
 #load image

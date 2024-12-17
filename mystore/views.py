@@ -13,6 +13,7 @@ CART_SESSION_ID = 'cart'
 
 class Cart:
     def __init__(self, request):
+        """Giỏ hàng dùng sesssion"""
         self.session = request.session
         cart = self.session.get(CART_SESSION_ID)
         if not cart:
@@ -27,6 +28,7 @@ class Cart:
         return iter(cart)
     
     def add(self, masp, quantity):
+        """Thêm sản phẩm vào giỏ hàng"""
         product = get_object_or_404(sp,pk=masp)
         masp = str(masp)
         if masp not in self.cart:
@@ -35,6 +37,7 @@ class Cart:
         self.save()
 
     def modify_cart(self, masp, order):
+        """Tăng giảm số lượng giỏ hàng"""
         masp = str(masp)
         if masp not in self.cart: pass
         if order == 'minus':
@@ -47,11 +50,15 @@ class Cart:
         self.save()
 
     def get_total_price(self):
+        """Tổng tiền giỏ hàng"""
         return sum(cart_item['gia']*cart_item['quantity'] for cart_item in self)
 
     def save(self):
         self.session.modified = True
 
+    def clear(self):
+        """Xóa toàn bộ giỏ hàng"""
+        self.session['cart'] = {}
 
 def product_detail(request, tensp):
     product = sp.objects.get(tensp=tensp)
@@ -188,9 +195,28 @@ def delete_product(request, masp):
     return redirect('list_product')
 
 def search_product(request):
+    """Tìm kiếm sản phẩm"""
     ds_sp = sp
     if request.method == "POST":
         ch = request.POST.get('searched')
         ds_sp = sp.objects.filter(tensp__contains=ch)
     context = {'ds_sp': ds_sp}
     return render(request, 'product_searched.html', context)
+
+def thanhtoan(request, user_id):
+    """Thêm hóa đơn và chi tiêt hóa đơn vào database"""
+    user = User.objects.get(pk=user_id)
+    cart = Cart(request)
+    tongtien = cart.get_total_price()
+    #Lưu hóa đơn
+    invoice = hoadon.objects.create(user=user, trigia=tongtien)
+
+    #Lưu chi tiêt hóa đơn
+    for cart_item in cart:
+        product_id = cart_item['masp']
+        product = sp.objects.get(pk=product_id)
+        quantity = cart_item['quantity']
+        invoice_detail = cthd.objects.create(sohd=invoice, masp=product, sl=quantity)
+
+    cart.clear()
+    return redirect('index')
